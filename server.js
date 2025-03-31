@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+import { nanoid } from "nanoid";
 
 import express from "express";
 
