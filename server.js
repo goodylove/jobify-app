@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5100;
 const app = express();
 import morgan from "morgan";
 
-const jobs = [
+let jobs = [
   {
     id: nanoid(),
     company: "Apple",
@@ -85,6 +85,22 @@ app.patch("/api/v1/jobs/:id", (req, res) => {
   job.id = nanoid();
 
   res.status(200).json({ message: "Jobs modifield " });
+});
+
+app.delete("/api/v1/jobs/:id", (req, res) => {
+  const { id } = req.params;
+
+  const job = jobs?.find((job) => job.id === id);
+
+  if (!job) {
+    res.status(400).json({ message: "invalid Id" });
+    return;
+  }
+
+  const newJob = jobs.filter((job) => job.id !== id);
+  jobs = newJob;
+
+  res.status(200).json({ message: "deleted " });
 });
 
 const start = () => {
