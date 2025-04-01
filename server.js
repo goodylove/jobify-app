@@ -4,7 +4,6 @@ import { nanoid } from "nanoid";
 
 import express, { raw } from "express";
 
-const PORT = process.env.PORT || 5100;
 const app = express();
 import morgan from "morgan";
 
@@ -102,6 +101,12 @@ app.delete("/api/v1/jobs/:id", (req, res) => {
 
   res.status(200).json({ message: "deleted " });
 });
+
+app.use("*", (req, res) => {
+  res.status(404).json({ msg: "Not Found" });
+});
+
+const PORT = process.env.PORT || 5100;
 
 const start = () => {
   app.listen(PORT, () => console.log("Listening to port " + PORT));
