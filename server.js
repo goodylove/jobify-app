@@ -6,6 +6,7 @@ import express, { raw } from "express";
 const app = express();
 import morgan from "morgan";
 import router from "./Routes/JobRoutes.js";
+import ConnectDB from "./DB/connectDB.js";
 
 if (process.env.NODE_ENV === "Development") {
   app.use(morgan("dev"));
@@ -33,7 +34,8 @@ app.use("*", (req, res) => {
 
 const PORT = process.env.PORT || 5100;
 
-const start = () => {
+const start = async () => {
+  await ConnectDB(process.env.MONGODB_URL);
   app.listen(PORT, () => console.log("Listening to port " + PORT));
 };
 
