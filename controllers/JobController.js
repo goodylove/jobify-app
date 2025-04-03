@@ -1,26 +1,9 @@
 import { nanoid } from "nanoid";
 import Job from "../model/jobModel.js";
 
-let jobs = [
-  {
-    id: nanoid(),
-    company: "Apple",
-    position: "Fullstack",
-  },
-  {
-    id: nanoid(),
-    company: "Goggle",
-    position: "Devops",
-  },
-  {
-    id: nanoid(),
-    company: "Meta",
-    position: "Fullstack",
-  },
-];
-
 export async function GetAllJobs(req, res) {
-  res.status(200).json({ jobs });
+  const jobs = await Job.find({});
+  res.status(200).json({ jobs, count: jobs.length });
 }
 
 export async function CreateJob(req, res) {
@@ -34,13 +17,13 @@ export async function CreateJob(req, res) {
   // jobs.push(job);
 
   const job = await Job.create({ company, position });
-  res.status(200).json({ jobs });
+  res.status(200).json({ job });
 }
 
 export async function GetSingleJob(req, res) {
   const { id } = req.params;
 
-  const singleJob = jobs?.find((job) => job.id === id);
+  const singleJob = await Job.findById(id);
 
   if (!singleJob) {
     res.status(400).json({ message: "invalid Id" });
@@ -60,31 +43,30 @@ export async function UpdateJob(req, res) {
 
   const { id } = req.params;
 
-  const job = jobs?.find((job) => job.id === id);
+  const UpdateSingleJob = await Job.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
 
-  if (!job) {
+  if (!UpdateSingleJob) {
     res.status(400).json({ message: "invalid Id" });
     return;
   }
-  job.company = company;
-  job.position = position;
-  job.id = nanoid();
+  // UpdateSingleJob.company = company;
+  // UpdateSingleJob.position = position;
+  // await UpdateSingleJob.save();
 
-  res.status(200).json({ message: "Jobs modifield " });
+  res.status(200).json({ UpdateSingleJob });
 }
 
 export async function DeleteJob(req, res) {
   const { id } = req.params;
 
-  const job = jobs?.find((job) => job.id === id);
+  const job = await Job.findByIdAndDelete(id);
 
   if (!job) {
-    res.status(400).json({ message: "invalid Id" });
+    res.status(400).json({ message: `No job with this ${id}` });
     return;
   }
 
-  const newJob = jobs.filter((job) => job.id !== id);
-  jobs = newJob;
-
-  res.status(200).json({ message: "deleted " });
+  res.status(200).json({ message: "succesfully deleted" });
 }
