@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import Job from "../model/jobModel.js";
+import { NotFoundError } from "../errors/customError.js";
 
 export async function GetAllJobs(req, res) {
   const jobs = await Job.find({});
@@ -26,8 +27,9 @@ export async function GetSingleJob(req, res) {
   const singleJob = await Job.findById(id);
 
   if (!singleJob) {
-    res.status(400).json({ message: "invalid Id" });
-    return;
+    throw new NotFoundError("No job with" + id);
+    // res.status(400).json({ message: "invalid Id" });
+    // return;
   }
 
   res.status(200).json({ singleJob });

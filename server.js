@@ -32,6 +32,11 @@ app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });
 });
 
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(404).json({ msg: "Not Found" });
+});
+
 const PORT = process.env.PORT || 5100;
 
 const start = async () => {
