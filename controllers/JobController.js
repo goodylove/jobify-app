@@ -47,9 +47,6 @@ export async function UpdateJob(req, res) {
     res.status(400).json({ message: "invalid Id" });
     return;
   }
-  // UpdateSingleJob.company = company;
-  // UpdateSingleJob.position = position;
-  // await UpdateSingleJob.save();
 
   res.status(200).json({ UpdateSingleJob });
 }
@@ -64,5 +61,5 @@ export async function DeleteJob(req, res) {
     return;
   }
 
-  res.status(200).json({ message: "succesfully deleted" });
+  res.status(200).json({ message: "deleted" });
 }
