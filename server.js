@@ -19,14 +19,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/jobs", router);
-// app.get("/api/v1/jobs");
-// app.post("/api/v1/jobs");
-
-// app.get("/api/v1/jobs/:id");
-
-// app.patch("/api/v1/jobs/:id");
-
-// app.delete("/api/v1/jobs/:id");
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });

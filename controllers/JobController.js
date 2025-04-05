@@ -14,8 +14,6 @@ export async function CreateJob(req, res) {
     res.status(400).json({ message: "please provide company and position" });
     return;
   }
-  // const job = { id: nanoid(), company, position };
-  // jobs.push(job);
 
   const job = await Job.create({ company, position });
   res.status(200).json({ job });
@@ -26,11 +24,7 @@ export async function GetSingleJob(req, res) {
 
   const singleJob = await Job.findById(id);
 
-  if (!singleJob) {
-    throw new NotFoundError("No job with" + id);
-    // res.status(400).json({ message: "invalid Id" });
-    // return;
-  }
+  if (!singleJob) throw new NotFoundError("No job with" + id);
 
   res.status(200).json({ singleJob });
 }
