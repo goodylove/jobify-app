@@ -7,11 +7,24 @@ function ErrorHandlerMiddleware(err, req, res, next) {
   };
 
   if ((err.name = "CastError")) {
-    customErr.message = "";
-    customErr.statusCode = StatusCodes.NOT_FOUND;
+    customErr.message = "Invalid Id";
+    customErr.statusCode = StatusCodes.BAD_REQUEST;
   }
 
-  res.status(customErr.statusCode).json({ msg: customErr.message, data: null });
+  if ((err.name = "validationError")) {
+    customErr.message = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(",");
+  }
+
+  if (err.code && err.code == 11000) {
+    customErr.message = "Duplicate Entry";
+    customErr.statusCode = StatusCodes.CONFLICT;
+  }
+
+  return res
+    .status(customErr.statusCode)
+    .json({ msg: customErr.message, data: null });
 }
 
 export default ErrorHandlerMiddleware;
