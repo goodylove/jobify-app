@@ -8,16 +8,18 @@ import morgan from "morgan";
 import router from "./Routes/JobRoutes.js";
 import ConnectDB from "./DB/connectDB.js";
 import ErrorHandlerMiddleware from "./middleware/errorHandler.js";
+import { JOB_STATUS, JOB_TYPE } from "./utils/constant.js";
 
 if (process.env.NODE_ENV === "Development") {
   app.use(morgan("dev"));
 }
 
+// console.log(Object.values(JOB_STATUS));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("helo world");
-});
+// app.get("/", (req, res) => {
+//   res.send("helo world");
+// });
 
 app.use("/api/v1/jobs", router);
 

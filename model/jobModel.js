@@ -15,6 +15,10 @@ const JobScheme = new mongoose.Schema(
       enum: Object.values(JOB_TYPE),
       default: JOB_TYPE.FULL_TIME,
     },
+    jobLocation: {
+      type: String,
+      default: "My city",
+    },
   },
   {
     timestamps: true,
