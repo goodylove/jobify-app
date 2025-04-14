@@ -63,7 +63,7 @@ export const validateRegisteredUserInput = withValidationError([
     .withMessage("email is required")
     .isEmail()
     .withMessage("Invalid email format")
-    .custom(async (value) => {
+    .custom(async (email) => {
       const user = await User.findOne({ email });
       if (user) {
         throw new BadRequestError("email already exist");
