@@ -9,6 +9,7 @@ import router from "./Routes/JobRoutes.js";
 import ConnectDB from "./DB/connectDB.js";
 import ErrorHandlerMiddleware from "./middleware/errorHandler.js";
 import { JOB_STATUS, JOB_TYPE } from "./utils/constant.js";
+import AuthRouter from "./Routes/auth.js";
 
 if (process.env.NODE_ENV === "Development") {
   app.use(morgan("dev"));
@@ -22,6 +23,7 @@ app.use(express.json());
 // });
 
 app.use("/api/v1/jobs", router);
+app.use("/api/v1/auth", AuthRouter);
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });

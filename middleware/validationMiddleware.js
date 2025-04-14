@@ -1,7 +1,8 @@
 import { body, param, validationResult } from "express-validator";
 import { BadRequestError, NotFoundError } from "../errors/customError.js";
-import { JOB_STATUS, JOB_TYPE } from "../utils/constant.js";
+import { JOB_STATUS, JOB_TYPE, USER_ROLE } from "../utils/constant.js";
 import Job from "../model/jobModel.js";
+import User from "../model/userModel.js";
 
 import mongoose from "mongoose";
 
@@ -53,4 +54,36 @@ export const validateIdParam = withValidationError([
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError("no job with " + value);
   }),
+]);
+
+export const validateRegisteredUserInput = withValidationError([
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
+    .notEmpty()
+    .withMessage("email is required")
+    .isEmail()
+    .withMessage("Invalid email format")
+    .custom(async (value) => {
+      const user = await User.findOne({ email });
+      if (user) {
+        throw new BadRequestError("email already exist");
+      }
+    }),
+  body("password")
+    .notEmpty()
+    .withMessage("password is required")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least  8 character long"),
+  body("lastName").notEmpty().withMessage("last name is required"),
+  body("location").notEmpty().withMessage("location is required"),
+  // body("role").isIn(Object.values(USER_ROLE)).withMessage("invalid role type"),
+]);
+
+export const validateloginInput = withValidationError([
+  body("email")
+    .notEmpty()
+    .withMessage("email is required")
+    .isEmail()
+    .withMessage("invalid email"),
+  body("password").notEmpty().withMessage("password is required"),
 ]);

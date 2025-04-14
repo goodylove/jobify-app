@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const UserModel = new mongoose.Schema({
   name: String,
   email: String,
+  password: String,
   lastName: {
     type: String,
     default: "LastName",
