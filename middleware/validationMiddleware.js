@@ -79,7 +79,7 @@ export const validateRegisteredUserInput = withValidationError([
   // body("role").isIn(Object.values(USER_ROLE)).withMessage("invalid role type"),
 ]);
 
-export const validateloginInput = withValidationError([
+export const validateLoginInput = withValidationError([
   body("email")
     .notEmpty()
     .withMessage("email is required")
