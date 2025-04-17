@@ -3,6 +3,7 @@ import Job from "../model/jobModel.js";
 import { NotFoundError } from "../errors/customError.js";
 
 export async function GetAllJobs(req, res) {
+  console.log(req.user);
   const jobs = await Job.find({});
   res.status(200).json({ jobs, count: jobs.length });
 }
