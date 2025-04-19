@@ -3,8 +3,7 @@ import Job from "../model/jobModel.js";
 import { NotFoundError } from "../errors/customError.js";
 
 export async function GetAllJobs(req, res) {
-  console.log(req.user);
-  const jobs = await Job.find({});
+  const jobs = await Job.find({ createdBy: req.user.userId });
   res.status(200).json({ jobs, count: jobs.length });
 }
 
@@ -16,6 +15,7 @@ export async function CreateJob(req, res) {
     return;
   }
 
+  // req.body.createdBy = req.user.userId;
   const job = await Job.create({ company, position });
   res.status(200).json({ job });
 }
