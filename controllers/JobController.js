@@ -8,15 +8,8 @@ export async function GetAllJobs(req, res) {
 }
 
 export async function CreateJob(req, res) {
-  const { company, position } = req.body;
-
-  if (!company || !position) {
-    res.status(400).json({ message: "please provide company and position" });
-    return;
-  }
-
-  // req.body.createdBy = req.user.userId;
-  const job = await Job.create({ company, position });
+  req.body.createdBy = req.user.userId;
+  const job = await Job.create(req.body);
   res.status(200).json({ job });
 }
 
@@ -29,13 +22,6 @@ export async function GetSingleJob(req, res) {
 }
 
 export async function UpdateJob(req, res) {
-  const { company, position } = req.body;
-
-  if (!company || !position) {
-    res.status(400).json({ message: "please provide company and position" });
-    return;
-  }
-
   const { id } = req.params;
 
   const UpdateSingleJob = await Job.findByIdAndUpdate(id, req.body, {

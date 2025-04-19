@@ -41,7 +41,7 @@ export const validateJobInput = withValidationError([
     .isIn(Object.values(JOB_STATUS))
     .withMessage("Invalid job status value"),
   body("jobType")
-    .isIn(["pending", "interview", "declined"])
+    .isIn(Object.values(JOB_TYPE))
     .withMessage("Invalid job type value"),
 ]);
 
