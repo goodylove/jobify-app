@@ -1,4 +1,4 @@
-import { UnauthenticatedError } from "../errors/customError.js";
+import { UnauthenticatedError, Unauthorized } from "../errors/customError.js";
 import { verifyJwt } from "../utils/tokenUtils.js";
 
 export function authMiddleware(req, res, next) {
@@ -14,3 +14,12 @@ export function authMiddleware(req, res, next) {
     throw new UnauthenticatedError("authentication Failed");
   }
 }
+
+export const authorizedPermission = (...role) => {
+  return (req, res, next) => {
+    if (!role.includes(req.user.role)) {
+      throw new Unauthorized(" not authorized to access this route");
+    }
+    next();
+  };
+};
