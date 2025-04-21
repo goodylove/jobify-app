@@ -1,4 +1,4 @@
-# Fullstack Course Project
+# Fullstack Mern Project
 
 Jobify is a fullstack app that helps users efficiently manage their job search by organizing applications, tracking statuses, and monitoring progress in one place
 
