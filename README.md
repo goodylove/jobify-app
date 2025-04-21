@@ -8,26 +8,7 @@ Frontend: React, React Router, Axios
 Backend: Node.js, Express, MongoDB (with Mongoose)
 Dev Tools: Vite, Nodemon, Postman, concurrently
 
-## Project Structure
-
-```
-
-root/
-├── client/ # React frontend
-│ └── src/
-│ ├── components/
-│ ├── pages/
-│ └── App.jsx
-├── # Node.js backend
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ └── server.js
-├── .env
-├── package.json
-└── README.md
-
-```
+````
 
 ## Getting Started
 
@@ -36,7 +17,7 @@ root/
 ```bash
 git https://github.com/goodylove/jobify-app.git
 cd jobify-app
-```
+````
 
 ### 2. Install dependencies
 
