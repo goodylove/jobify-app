@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AddJob, Admin, DashboardLayout, Error, HomeLayout, Landing, Login, Profile, Register, Stats } from "../pages";
 import AllJobs from "../pages/Alljobs";
+import {action as registerAction} from "../pages/Register"
 
 export const router = createBrowserRouter([
   { path: "/",
@@ -9,7 +10,10 @@ export const router = createBrowserRouter([
 
     children:[
        { index:true, element: <Landing /> },
-       { path: "register", element: <Register /> },
+       { path: "register", element: <Register />,
+
+        action:registerAction
+        },
        { path: "login", element: <Login /> },
        { path: "dashboard", element: <DashboardLayout />,
         children:[
