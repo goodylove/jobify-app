@@ -21,7 +21,7 @@ const loginAction = async ({ request }) => {
   try {
     await customFetch.post("/auth/login", data);
 
-    return redirect("/dashbord");
+    return redirect("/dashboard");
   } catch (error) {
     console.log(error);
     return error;
