@@ -1,4 +1,8 @@
-import { UnauthenticatedError, Unauthorized } from "../errors/customError.js";
+import {
+  BadRequestError,
+  UnauthenticatedError,
+  Unauthorized,
+} from "../errors/customError.js";
 import { verifyJwt } from "../utils/tokenUtils.js";
 
 export function authMiddleware(req, res, next) {
@@ -8,6 +12,8 @@ export function authMiddleware(req, res, next) {
   }
   try {
     const { userId, role } = verifyJwt(token);
+    // const testUser = (userId = "hhhhhhrhhr");
+    // testUser;
     req.user = { userId, role };
     next();
   } catch (err) {
@@ -22,4 +28,9 @@ export const authorizedPermission = (...role) => {
     }
     next();
   };
+};
+
+export const checkForTestUser = (req, res, next) => {
+  if (req.user.testUser) throw new BadRequestError("Demo user. Read Only");
+  next();
 };

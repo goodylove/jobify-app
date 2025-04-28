@@ -1,16 +1,17 @@
-import { nanoid } from "nanoid";
 import Job from "../model/jobModel.js";
-import { NotFoundError } from "../errors/customError.js";
+import mongoose from "mongoose";
+import day from "dayjs";
+import { StatusCodes } from "http-status-codes";
 
 export async function GetAllJobs(req, res) {
   const jobs = await Job.find({ createdBy: req.user.userId });
-  res.status(200).json({ jobs, count: jobs.length });
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 }
 
 export async function CreateJob(req, res) {
   req.body.createdBy = req.user.userId;
   const job = await Job.create(req.body);
-  res.status(200).json({ job });
+  res.status(StatusCodes.OK).json({ job });
 }
 
 export async function GetSingleJob(req, res) {
@@ -18,7 +19,7 @@ export async function GetSingleJob(req, res) {
 
   const singleJob = await Job.findById(id);
 
-  res.status(200).json({ singleJob });
+  res.status(StatusCodes.OK).json({ singleJob });
 }
 
 export async function UpdateJob(req, res) {
@@ -28,7 +29,7 @@ export async function UpdateJob(req, res) {
     new: true,
   });
 
-  res.status(200).json({ UpdateSingleJob });
+  res.status(StatusCodes.OK).json({ UpdateSingleJob });
 }
 
 export async function DeleteJob(req, res) {
@@ -36,5 +37,54 @@ export async function DeleteJob(req, res) {
 
   const job = await Job.findByIdAndDelete(id);
 
-  res.status(200).json({ message: "deleted" });
+  res.status(StatusCodes.OK).json({ message: "deleted" });
 }
+
+export const showStats = async (req, res) => {
+  let stats = await Job.aggregate([
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
+  ]);
+
+  stats = stats.reduce((acc, cur) => {
+    const { _id: title, count } = cur;
+    acc[title] = count;
+    return acc;
+  }, {});
+
+  const defaultStats = {
+    pending: stats.pending || 0,
+    declined: stats.declined || 0,
+    interview: stats.interview || 0,
+  };
+
+  let monthlyApplication = await Job.aggregate([
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $limit: 6 },
+  ]);
+  monthlyApplication = monthlyApplication
+    .map((app) => {
+      const {
+        _id: { month, year },
+        count,
+      } = app;
+      const date = day()
+        .month(month - 1)
+        .year(year)
+        .format("MMM YY");
+
+      return {
+        date,
+        count,
+      };
+    })
+    .reverse();
+  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplication });
+};

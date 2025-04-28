@@ -7,3 +7,7 @@ export { default as FormRowsSelect } from "./FormRowsSelect";
 export { default as JobContainer } from "./JobContainer";
 export { default as SearchContainer } from "./SearchContainer";
 export {default as StatsItems} from "./StatsItems"
+export {default as SubmitBtn} from "./SubmitBtn"
+export {default as StatsContainer} from "./StatsContainer"
+export {default as ChartContainer} from "./ChartContainer"
+
