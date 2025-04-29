@@ -5,10 +5,15 @@ import { toast } from 'react-toastify'
 import { createContext, useContext } from 'react'
 
 
-export const loader =  async()=>{
+export const loader =  async({request})=>{
+  const params = Object.fromEntries([
+    ... new URL(request.url).searchParams.entries()
+  ])
   try {
     
-    const {data} =  await customFetch.get('/jobs')
+    const {data} =  await customFetch.get('/jobs',{
+      params
+    }    )
     return {data}
       
     
@@ -34,6 +39,6 @@ const AllJobs = () => {
   )
 }
 
-export const useAlljobsContext = ()=> useContext(allJobContext)
+export const useAllJobsContext = ()=> useContext(allJobContext)
 
 export default AllJobs
