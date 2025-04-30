@@ -1,9 +1,11 @@
 import Job from "./Job"
 import Wrapper from "../assets/wrappers/JobsContainer"
 import { useAllJobsContext } from "../pages/Alljobs"
+import PageBtnContainer from "./PageBtnContanier"
 function JobContainer() {
     const {data} =  useAllJobsContext()
-    const {jobs} = data
+    console.log(data)
+    const {jobs,numOfPage,} = data
 
 
     if(jobs.length === 0 ){
@@ -19,6 +21,7 @@ function JobContainer() {
             return <Job  key={job._id} {...job}/>
         })}
       </div>
+      {numOfPage > 1 && <PageBtnContainer/>}
     </Wrapper>
   )
 }

@@ -14,7 +14,7 @@ export const loader =  async({request})=>{
     const {data} =  await customFetch.get('/jobs',{
       params
     }    )
-    return {data}
+    return {data,searchValues:{...params}}
       
     
     
@@ -29,9 +29,9 @@ export const loader =  async({request})=>{
 const allJobContext =  createContext()
 
 const AllJobs = () => {
-  const{ data }= useLoaderData()
+  const{ data,searchValues }= useLoaderData()
   return (
-    <allJobContext.Provider value={{data}}>
+    <allJobContext.Provider value={{data, searchValues}}>
       <SearchContainer/>
       <JobContainer/>
 

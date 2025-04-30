@@ -36,7 +36,7 @@ function Login() {
        <FormRow type="email" labelText="Email" name="email" defaultValue="goodyc474@gmail.com"/>
        <FormRow type="password" labelText="Password" name="password" defaultValue="Chiwe"/>
        <SubmitBtn />
-        <button  type="button" className="btn btn-block">Explore The App</button>
+        {/* <button  type="button" className="btn btn-block">Explore The App</button> */}
         <p>Not a member yet? <Link to="/Register" className="member-btn">Register</Link></p>
       </Form>
     </Wrapper>

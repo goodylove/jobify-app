@@ -4,11 +4,23 @@ import { JOB_TYPE, JOB_STATUS, JOB_SORT_BY } from "../../../utils/constant"
 import { useAllJobsContext } from '../pages/Alljobs';
 import FormRow  from "./FormRow"
 import FormRowsSelect from './FormRowsSelect';
-import SubmitBtn from './SubmitBtn';
 
 const SearchContainer = () => {
   const { searchValues } = useAllJobsContext()
-  const { search, jobStatus, jobType, sort } = searchValues || {}
+  const { search, jobStatus, jobType, sort } = searchValues 
+
+function debounce(onChange){
+  let timeout;
+  return (e)=>{
+const form = e.currentTarget.form
+  clearTimeout(timeout)
+
+  setTimeout(()=>{
+    onChange(form)
+
+  }, 1000)
+  }
+}
 
   const submit = useSubmit();
 
@@ -23,9 +35,10 @@ const SearchContainer = () => {
             type='search'
             name='search'
             defaultValue={search}
-            onChange={(e) => {
-              submit(e.currentTarget.form);
-            }}
+            onChange={debounce((form)=>{
+              submit(form)
+
+            })}
           />
           <FormRowsSelect
             labelText='job status'
@@ -57,7 +70,7 @@ const SearchContainer = () => {
             Reset Search Values
           </Link>
 
-          <SubmitBtn formBtn/>
+          {/* <SubmitBtn formBtn/> */}
         </div>
       </Form>
     </Wrapper>
