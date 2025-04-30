@@ -3,6 +3,7 @@ import User from "../model/userModel.js";
 import Jobs from "../model/jobModel.js";
 import cloudinary from "cloudinary";
 import { promises as fs } from "fs";
+import { formateImage } from "../middleware/multerMiddleware.js";
 
 export const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
@@ -21,8 +22,9 @@ export const updateUser = async (req, res) => {
   delete newUser.password;
 
   if (req.file) {
-    const response = await cloudinary.v2.uploader.upload(req.file.path);
-    await fs.unlink(req.file.path);
+    const file = formateImage(req.file);
+    const response = await cloudinary.v2.uploader.upload(file);
+    // await fs.unlink(req.file.path);
     newUser.avatar = response.secure_url;
     newUser.avatarPublicId = response.public_id;
   }
