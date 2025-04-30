@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import User from "../model/userModel.js";
 import Jobs from "../model/jobModel.js";
 import cloudinary from "cloudinary";
-import { promises as fs } from "fs";
+
 import { formateImage } from "../middleware/multerMiddleware.js";
 
 export const getCurrentUser = async (req, res) => {
@@ -23,6 +23,7 @@ export const updateUser = async (req, res) => {
 
   if (req.file) {
     const file = formateImage(req.file);
+
     const response = await cloudinary.v2.uploader.upload(file);
     // await fs.unlink(req.file.path);
     newUser.avatar = response.secure_url;
