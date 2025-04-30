@@ -25,7 +25,6 @@ export const loader =  async({request})=>{
     
   }
 }
-
 const allJobContext =  createContext()
 
 const AllJobs = () => {
