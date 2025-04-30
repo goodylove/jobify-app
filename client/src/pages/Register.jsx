@@ -30,11 +30,11 @@ function Register() {
       <Form method="post"   className="form">
         <Logo/>
         <h4>Register</h4>
-       <FormRow type="text" labelText="Name" name="name" defaultValue="Goody"/>
-       <FormRow type="text" labelText="Last Name" name="lastName" defaultValue="Chiwendu"/>
-       <FormRow type="text" labelText="Location" name="location" defaultValue="Lagos"/>
-       <FormRow type="email" labelText="Email" name="email" defaultValue="goodyc474@gmail.com"/>
-       <FormRow type="password" labelText="Password" name="password" defaultValue="Goodness" />
+       <FormRow type="text" labelText="Name" name="name" />
+       <FormRow type="text" labelText="Last Name" name="lastName" />
+       <FormRow type="text" labelText="Location" name="location"/>
+       <FormRow type="email" labelText="Email" name="email" />
+       <FormRow type="password" labelText="Password" name="password" />
         <SubmitBtn/>
           
           <p>Already a member? <Link to="/login" className="member-btn">Login</Link></p>

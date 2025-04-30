@@ -33,8 +33,8 @@ function Login() {
         <Logo/>
 
         <h4>Login</h4>
-       <FormRow type="email" labelText="Email" name="email" defaultValue="goodyc474@gmail.com"/>
-       <FormRow type="password" labelText="Password" name="password" defaultValue="Chiwe"/>
+       <FormRow type="email" labelText="Email" name="email" />
+       <FormRow type="password" labelText="Password" name="password" />
        <SubmitBtn />
         {/* <button  type="button" className="btn btn-block">Explore The App</button> */}
         <p>Not a member yet? <Link to="/Register" className="member-btn">Register</Link></p>
