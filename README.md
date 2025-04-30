@@ -58,7 +58,7 @@ Make sure your `package.json` scripts look like this:
 ```json
 "scripts": {
   "client": "cd client  &&  npm run dev",
-  "server": "nodemon server/index.js",
+  "server": "nodemon server",
   "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
 }
 ```
